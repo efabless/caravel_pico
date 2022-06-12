@@ -31,7 +31,8 @@
 /* pins on a Raspberry Pi, also running at 3.3V.			*/
 
 module tbuart (
-	input  ser_rx
+	input  ser_rx,
+	output  ser_tx
 );
 	reg [3:0] recv_state;
 	reg [2:0] recv_divcnt;
@@ -53,7 +54,9 @@ module tbuart (
 	// 9600 baud default and will bounce up to higher baud rates when
 	// passed specific command words.
 
-	always #1500 clk <= (clk === 1'b0);
+//	always #1500 clk <= (clk === 1'b0);
+	always #2650 clk <= (clk === 1'b0);  // working for 9600 baud
+//	always #125 clk <= (clk === 1'b0);
 
 	always @(posedge clk) begin
 		recv_divcnt <= recv_divcnt + 1;

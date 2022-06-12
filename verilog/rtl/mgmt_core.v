@@ -27,26 +27,26 @@
  *  SPDX-License-Identifier: ISC
  */
 
-`ifdef PICORV32_V
-`error "mgmt_core.v must be read before picorv32.v!"
-`endif
+// `ifdef PICORV32_V
+// `error "mgmt_core.v must be read before picorv32.v!"
+// `endif
 
 `define PICORV32_REGS mgmt_soc_regs
 
-`include "picorv32.v"
-`include "spimemio.v"
-`include "simpleuart.v"
-`include "storage.v"
-`include "gpio_wb.v"
-`include "storage_bridge_wb.v"
-`include "simple_spi_master.v"
-`include "counter_timer_high.v"
-`include "counter_timer_low.v"
-`include "la_wb.v"
-`include "sysctrl.v"
-`include "wb_intercon.v"
-`include "mem_wb.v"
-`include "convert_gpio_sigs.v"
+// `include "picorv32.v"
+// `include "spimemio.v"
+// `include "simpleuart.v"
+// `include "storage.v"
+// `include "gpio_wb.v"
+// `include "storage_bridge_wb.v"
+// `include "simple_spi_master.v"
+// `include "counter_timer_high.v"
+// `include "counter_timer_low.v"
+// `include "la_wb.v"
+// `include "sysctrl.v"
+// `include "wb_intercon.v"
+// `include "mem_wb.v"
+// `include "convert_gpio_sigs.v"
 
 module mgmt_core (
 `ifdef USE_POWER_PINS
@@ -661,6 +661,7 @@ module mgmt_core (
     wire mprj_ctrl_stb_i;
     wire mprj_ctrl_ack_o;
     wire [31:0] mprj_ctrl_dat_o;
+    wire mgmt_ena_ro;
 
     // Wishbone Slave RAM
     wire mem_stb_i;
@@ -743,8 +744,8 @@ module mgmt_core (
 
     storage storage(
     `ifdef USE_POWER_PINS
-        .VPWR(VPWR),
-        .VGND(VGND),
+        .VPWR(vdd),
+        .VGND(vss),
     `endif
         .mgmt_clk(wb_clk_i),
         .mgmt_ena(mgmt_ena),
